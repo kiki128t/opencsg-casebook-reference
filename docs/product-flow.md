@@ -56,3 +56,25 @@ Demo 登录写入登录状态后读取 `redirect`，使用 replace 导航回阅�
 - 自动下载失败：展示手动下载按钮，并记录失败原因用于监控。
 - PDF 鉴权失败：刷新短期访问凭证；仍失败则引导用户重新登录或联系支持。
 - PDF 资源不可用：返回明确的资源状态，不暴露对象存储原始地址。
+
+## 6. Cases Banner 接入参考
+
+新增研发参考页 `#/cases-banner-reference`，用于验证案例总册在官网 `/cases` 页面中的位置与交互，不修改现有官网。页面区块顺序为：
+
+1. “我们的客户”标题、说明与操作按钮。
+2. 3 张官网精选案例卡片。
+3. 客户案例总册 Banner。
+
+Banner 默认显示，右下角 `Demo Controls` 提供 Banner ON / OFF 开关，状态键为 `opencsg_casebook_banner_enabled`。Banner 仅保留一个“查看案例总册”CTA，进入 `#/cases/casebook/`；封面、内页、文案和标签均从 `src/data/content.js` 读取。
+
+案例总册 Landing Page 的“精选客户实践”展示 6 条官网真实案例：封面、标签、标题、摘要和详情链接均可配置，整卡在新标签页打开。正式研发应由现有 Cases CMS / API 同时驱动官网案例列表与案例总册精选区，数据流建议为：
+
+```mermaid
+flowchart LR
+  A[Cases CMS / API] --> B[官网 Cases 列表]
+  A --> C[案例总册精选客户实践]
+  D[Casebook CMS 配置] --> E[官网总册 Banner]
+  E --> F[案例总册 Landing]
+```
+
+若某条案例暂无详情 URL，应以不可点击卡片展示，不使用虚假链接；获得正式链接后只需更新数据配置。

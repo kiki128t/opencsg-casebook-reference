@@ -13,6 +13,7 @@ GitHub Pages URL：发布后更新。
 | 产品路径 | Hash URL | 说明 |
 | --- | --- | --- |
 | `/cases/` | `#/cases/` | 客户案例中心及高权重总册入口 |
+| `/cases-banner-reference` | `#/cases-banner-reference` | 官网 `/cases` 接入总册 Banner 的研发参考页 |
 | `/cases/casebook/` | `#/cases/casebook/` | 案例总册 Landing Page |
 | `/cases/casebook/read/` | `#/cases/casebook/read/` | 登录后完整在线阅读器 |
 | `/cases/casebook/download/` | `#/cases/casebook/download/` | 下载留资页 |
@@ -49,8 +50,15 @@ flowchart LR
 | --- | --- |
 | `opencsg_demo_logged_in` | Demo 登录状态 |
 | `opencsg_casebook_lead_submitted` | Demo 留资状态 |
+| `opencsg_casebook_banner_enabled` | 参考页案例总册 Banner 显示状态，默认开启 |
 
-右下角 `Demo Controls` 可分别重置两种状态，用于验收四种状态组合。
+右下角 `Demo Controls` 可分别重置登录与留资状态；在 `#/cases-banner-reference` 页面还可实时切换案例总册 Banner 的 ON / OFF 状态。
+
+## 官网 Cases 接入参考
+
+`#/cases-banner-reference` 模拟 OpenCSG 官网客户案例区块，并在精选案例卡片下方展示案例总册 Banner。Banner 的文案、标签、CTA 和三张总册图均由 `src/data/content.js` 配置，组件位于 `src/components/CasebookBanner.jsx`，CTA 返回 `#/cases/casebook/`。
+
+案例总册 Landing Page 的“精选客户实践”使用 6 条 OpenCSG 官网真实案例数据与封面图，整卡在新标签页打开对应案例；“查看更多客户案例”进入官网案例中心。正式接入时应以 CMS / API 为唯一数据源，避免 Demo 与官网重复维护。
 
 ## 本地运行
 
@@ -89,4 +97,5 @@ Demo 已实现：页面、交互、响应式、登录回跳、留资校验、重
 
 - `public/assets/casebook/OpenCSG-Customer-Casebook.pdf`：用户提供的 106 页客户案例总册原文件。
 - `public/assets/casebook-preview/01-cover.webp` 至 `08-results.webp`：从正式 PDF 前 8 页生成的公开预览素材。
-- `src/data/content.js`：精选案例摘要和相关推荐待 CMS / 业务审核内容替换。
+- `public/assets/cases/`：从 OpenCSG 官网案例中心引用并本地化的 6 张案例封面。
+- `src/data/content.js`：案例总册 Banner、官网真实案例摘要及相关推荐的可编辑数据配置；正式环境应改接 CMS / API。
